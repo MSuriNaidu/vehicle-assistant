@@ -2,10 +2,14 @@ spring:
   application:
     name: vehicle-assistant
 
+logging:
+  pattern:
+    level: "%5p [requestId:%X{requestId:-}]"
+
 langchain4j:
   open-ai:
     chat-model:
-      base-url: https://openrouter.ai/api/v1
+      base-url: ${OPENAI_BASE_URL:https://openrouter.ai/api/v1}
       api-key: ${OPENAI_API_KEY}
       model-name: 'openrouter/free'
       temperature: 0.7
