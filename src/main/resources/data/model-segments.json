@@ -1,0 +1,70 @@
+{
+  "swift": {
+    "segment": "HATCHBACK",
+    "make": "Maruti Suzuki"
+  },
+  "baleno": {
+    "segment": "HATCHBACK",
+    "make": "Maruti Suzuki"
+  },
+  "wagonr": {
+    "segment": "HATCHBACK",
+    "make": "Maruti Suzuki"
+  },
+  "alto": {
+    "segment": "HATCHBACK",
+    "make": "Maruti Suzuki"
+  },
+  "i10": {
+    "segment": "HATCHBACK",
+    "make": "Hyundai"
+  },
+  "i20": {
+    "segment": "HATCHBACK",
+    "make": "Hyundai"
+  },
+  "venue": {
+    "segment": "COMPACT_SUV",
+    "make": "Hyundai"
+  },
+  "creta": {
+    "segment": "SUV",
+    "make": "Hyundai"
+  },
+  "nexon": {
+    "segment": "COMPACT_SUV",
+    "make": "Tata"
+  },
+  "punch": {
+    "segment": "COMPACT_SUV",
+    "make": "Tata"
+  },
+  "brezza": {
+    "segment": "COMPACT_SUV",
+    "make": "Maruti Suzuki"
+  },
+  "ertiga": {
+    "segment": "MPV",
+    "make": "Maruti Suzuki"
+  },
+  "city": {
+    "segment": "SEDAN",
+    "make": "Honda"
+  },
+  "verna": {
+    "segment": "SEDAN",
+    "make": "Hyundai"
+  },
+  "innova": {
+    "segment": "MPV",
+    "make": "Toyota"
+  },
+  "scorpio": {
+    "segment": "SUV",
+    "make": "Mahindra"
+  },
+  "fortuner": {
+    "segment": "SUV",
+    "make": "Toyota"
+  }
+}

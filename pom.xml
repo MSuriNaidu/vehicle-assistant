@@ -72,6 +72,11 @@
 			<artifactId>langchain4j-spring-boot-starter</artifactId>
 			<version>1.20.0-beta30</version>
 		</dependency>
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-agentic</artifactId>
+			<version>1.20.0-beta30</version>
+		</dependency>
 
 		<dependency>
 			<groupId>dev.langchain4j</groupId>

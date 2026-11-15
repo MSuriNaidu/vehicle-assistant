@@ -1,0 +1,162 @@
+[
+  {
+    "repair": "Spark plug replacement",
+    "segment": "HATCHBACK",
+    "minInr": 800,
+    "maxInr": 2500,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Spark plug replacement",
+    "segment": "SEDAN",
+    "minInr": 1000,
+    "maxInr": 3200,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Spark plug replacement",
+    "segment": "COMPACT_SUV",
+    "minInr": 1000,
+    "maxInr": 3500,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Spark plug replacement",
+    "segment": "SUV",
+    "minInr": 1500,
+    "maxInr": 5000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Spark plug replacement",
+    "segment": "MPV",
+    "minInr": 1200,
+    "maxInr": 4000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Ignition coil replacement",
+    "segment": "HATCHBACK",
+    "minInr": 1800,
+    "maxInr": 5000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Ignition coil replacement",
+    "segment": "SEDAN",
+    "minInr": 2200,
+    "maxInr": 6000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Ignition coil replacement",
+    "segment": "COMPACT_SUV",
+    "minInr": 2200,
+    "maxInr": 6500,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Ignition coil replacement",
+    "segment": "SUV",
+    "minInr": 3000,
+    "maxInr": 9000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Ignition coil replacement",
+    "segment": "MPV",
+    "minInr": 2500,
+    "maxInr": 8000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Oxygen sensor replacement",
+    "segment": "HATCHBACK",
+    "minInr": 2500,
+    "maxInr": 7000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Oxygen sensor replacement",
+    "segment": "SEDAN",
+    "minInr": 3000,
+    "maxInr": 8500,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Oxygen sensor replacement",
+    "segment": "COMPACT_SUV",
+    "minInr": 3000,
+    "maxInr": 9000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Oxygen sensor replacement",
+    "segment": "SUV",
+    "minInr": 4000,
+    "maxInr": 12000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Oxygen sensor replacement",
+    "segment": "MPV",
+    "minInr": 3500,
+    "maxInr": 10000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Brake pad replacement",
+    "segment": "HATCHBACK",
+    "minInr": 1800,
+    "maxInr": 5000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Brake pad replacement",
+    "segment": "SEDAN",
+    "minInr": 2500,
+    "maxInr": 7000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Brake pad replacement",
+    "segment": "COMPACT_SUV",
+    "minInr": 2500,
+    "maxInr": 7500,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Brake pad replacement",
+    "segment": "SUV",
+    "minInr": 3500,
+    "maxInr": 10000,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Brake pad replacement",
+    "segment": "MPV",
+    "minInr": 3000,
+    "maxInr": 8500,
+    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "asOf": "2026-11"
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "code": "P0300",
+    "meaning": "Random or multiple-cylinder misfire detected",
+    "severity": "DRIVE_CAREFULLY",
+    "commonCauses": ["Worn spark plugs", "Ignition coil fault", "Fuel delivery issue", "Vacuum leak"]
+  },
+  {
+    "code": "P0301",
+    "meaning": "Cylinder 1 misfire detected",
+    "severity": "DRIVE_CAREFULLY",
+    "commonCauses": ["Spark plug fault", "Ignition coil fault", "Fuel injector issue", "Low compression"]
+  },
+  {
+    "code": "P0420",
+    "meaning": "Catalyst system efficiency below threshold, bank 1",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Aging catalytic converter", "Faulty oxygen sensor", "Exhaust leak", "Engine misfire"]
+  },
+  {
+    "code": "P0171",
+    "meaning": "System too lean, bank 1",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Vacuum leak", "Low fuel pressure", "Dirty mass airflow sensor", "Exhaust leak"]
+  },
+  {
+    "code": "P0172",
+    "meaning": "System too rich, bank 1",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Leaking fuel injector", "Faulty oxygen sensor", "Restricted air filter", "Fuel pressure fault"]
+  },
+  {
+    "code": "P0130",
+    "meaning": "Oxygen sensor circuit fault, bank 1 sensor 1",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Faulty oxygen sensor", "Damaged wiring", "Connector corrosion", "Exhaust leak"]
+  },
+  {
+    "code": "P0113",
+    "meaning": "Intake air temperature sensor circuit high input",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Disconnected sensor", "Open wiring circuit", "Faulty intake air temperature sensor"]
+  },
+  {
+    "code": "P0335",
+    "meaning": "Crankshaft position sensor circuit fault",
+    "severity": "DRIVE_CAREFULLY",
+    "commonCauses": ["Faulty crankshaft sensor", "Damaged wiring", "Reluctor wheel damage"]
+  },
+  {
+    "code": "P0217",
+    "meaning": "Engine overtemperature condition",
+    "severity": "STOP_NOW",
+    "commonCauses": ["Low coolant", "Cooling fan fault", "Thermostat stuck closed", "Water pump fault"]
+  },
+  {
+    "code": "P0562",
+    "meaning": "System voltage low",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Weak battery", "Alternator fault", "Loose or corroded battery connections"]
+  },
+  {
+    "code": "P0700",
+    "meaning": "Transmission control system has requested the malfunction indicator lamp",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Transmission control module fault", "Transmission sensor fault", "Transmission wiring issue"]
+  },
+  {
+    "code": "P0128",
+    "meaning": "Coolant thermostat temperature below regulating temperature",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Thermostat stuck open", "Low coolant", "Coolant temperature sensor fault"]
+  },
+  {
+    "code": "P0442",
+    "meaning": "Small evaporative emissions system leak detected",
+    "severity": "ROUTINE",
+    "commonCauses": ["Loose fuel cap", "Cracked vapor hose", "Faulty purge valve"]
+  },
+  {
+    "code": "P0500",
+    "meaning": "Vehicle speed sensor fault",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Faulty speed sensor", "Damaged wiring", "Sensor connector fault"]
+  },
+  {
+    "code": "P0401",
+    "meaning": "Exhaust gas recirculation flow insufficient",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Blocked EGR passage", "Faulty EGR valve", "Vacuum or wiring issue"]
+  },
+  {
+    "code": "P0101",
+    "meaning": "Mass or volume air flow sensor range or performance fault",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Dirty mass airflow sensor", "Air intake leak", "Restricted air filter", "Wiring fault"]
+  },
+  {
+    "code": "P0135",
+    "meaning": "Oxygen sensor heater circuit fault, bank 1 sensor 1",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Failed sensor heater", "Blown fuse", "Damaged wiring"]
+  },
+  {
+    "code": "P0340",
+    "meaning": "Camshaft position sensor circuit fault",
+    "severity": "DRIVE_CAREFULLY",
+    "commonCauses": ["Faulty camshaft sensor", "Damaged wiring", "Timing component fault"]
+  },
+  {
+    "code": "P0455",
+    "meaning": "Large evaporative emissions system leak detected",
+    "severity": "SERVICE_SOON",
+    "commonCauses": ["Missing or loose fuel cap", "Disconnected vapor hose", "Faulty purge valve"]
+  },
+  {
+    "code": "P0087",
+    "meaning": "Fuel rail or system pressure too low",
+    "severity": "DRIVE_CAREFULLY",
+    "commonCauses": ["Restricted fuel filter", "Weak fuel pump", "Fuel pressure regulator fault"]
+  }
+]
