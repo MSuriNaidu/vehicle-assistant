@@ -4,6 +4,9 @@ import com.vigidrive.vehicleassistant.agent.AdvisorAgent;
 import com.vigidrive.vehicleassistant.agent.CoordinatorAgent;
 import com.vigidrive.vehicleassistant.agent.DiagnosisAgent;
 import com.vigidrive.vehicleassistant.agent.IntakeAgent;
+import com.vigidrive.vehicleassistant.model.AdviceResponse;
+import com.vigidrive.vehicleassistant.model.Diagnosis;
+import com.vigidrive.vehicleassistant.model.Urgency;
 import com.vigidrive.vehicleassistant.tools.VehicleTools;
 import dev.langchain4j.agentic.AgenticServices;
 import dev.langchain4j.model.chat.ChatModel;
@@ -39,12 +42,19 @@ public class AgentConfig {
     }
 
     @Bean
-    public CoordinatorAgent coordinatorAgent(IntakeAgent intakeAgent,
-                                             DiagnosisAgent diagnosisAgent,
+    public CoordinatorAgent coordinatorAgent(DiagnosisAgent diagnosisAgent,
                                              AdvisorAgent advisorAgent) {
         return AgenticServices.sequenceBuilder(CoordinatorAgent.class)
-                .subAgents(intakeAgent, diagnosisAgent, advisorAgent)
-                .outputKey("answer")
+                .subAgents(diagnosisAgent, advisorAgent)
+                .outputKey("adviceResponse")
+                .output(scope -> {
+                    Object diagnosisValue = scope.readState("diagnosis");
+                    Diagnosis diagnosis = diagnosisValue instanceof Diagnosis value ? value : null;
+                    Urgency urgency = diagnosis == null
+                            ? null
+                            : Urgency.fromModelValue(diagnosis.urgency());
+                    return new AdviceResponse(urgency, (String) scope.readState("answer"), false, null);
+                })
                 .build();
     }
 

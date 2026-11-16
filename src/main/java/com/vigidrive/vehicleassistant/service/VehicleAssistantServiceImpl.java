@@ -1,6 +1,11 @@
 package com.vigidrive.vehicleassistant.service;
 
 import com.vigidrive.vehicleassistant.agent.CoordinatorAgent;
+import com.vigidrive.vehicleassistant.agent.IntakeAgent;
+import com.vigidrive.vehicleassistant.exception.InvalidModelOutputException;
+import com.vigidrive.vehicleassistant.model.AdviceResponse;
+import com.vigidrive.vehicleassistant.model.Urgency;
+import com.vigidrive.vehicleassistant.model.VehicleIssue;
 import com.vigidrive.vehicleassistant.safety.SafetyGuard;
 import com.vigidrive.vehicleassistant.safety.SafetyResult;
 import org.slf4j.Logger;
@@ -21,16 +26,20 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
     private static final Pattern DTC_CODE_PATTERN =
             Pattern.compile("\\bP\\d{4}\\b", Pattern.CASE_INSENSITIVE);
 
+    private final IntakeAgent intakeAgent;
     private final CoordinatorAgent coordinatorAgent;
     private final SafetyGuard safetyGuard;
 
-    public VehicleAssistantServiceImpl(CoordinatorAgent coordinatorAgent, SafetyGuard safetyGuard) {
+    public VehicleAssistantServiceImpl(IntakeAgent intakeAgent,
+                                       CoordinatorAgent coordinatorAgent,
+                                       SafetyGuard safetyGuard) {
+        this.intakeAgent = intakeAgent;
         this.coordinatorAgent = coordinatorAgent;
         this.safetyGuard = safetyGuard;
     }
 
     @Override
-    public String ask(String question) {
+    public AdviceResponse ask(String question) {
         String requestId = UUID.randomUUID().toString();
         String previousRequestId = MDC.get("requestId");
         MDC.put("requestId", requestId);
@@ -42,21 +51,31 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
             SafetyResult messageSafety = safetyGuard.check(question);
             if (messageSafety.dangerous()) {
                 log.warn("Request stopped by safety guard: reason={}", messageSafety.reason());
-                return messageSafety.message();
+                return safetyResponse(messageSafety);
             }
 
-            SafetyResult dtcSafety = safetyGuard.checkDtcCodes(extractDtcCodes(question));
+            log.info("Starting intake agent");
+            VehicleIssue vehicleIssue = intakeAgent.intakeVehicleIssue(question);
+            List<String> dtcCodes = new ArrayList<>(extractDtcCodes(question));
+            if (vehicleIssue != null && vehicleIssue.dtcCodes() != null) {
+                dtcCodes.addAll(vehicleIssue.dtcCodes());
+            }
+            SafetyResult dtcSafety = safetyGuard.checkDtcCodes(dtcCodes);
             if (dtcSafety.dangerous()) {
                 log.warn("Request stopped by DTC safety check: reason={}", dtcSafety.reason());
-                return dtcSafety.message();
+                return safetyResponse(dtcSafety);
             }
 
-            log.info("Starting sequential agent coordinator");
-            String answer = coordinatorAgent.coordinate(question);
+            log.info("Starting diagnosis and advisor sequence");
+            AdviceResponse answer = coordinatorAgent.coordinate(question, vehicleIssue);
             log.info("Vehicle assistant request completed: durationMs={}", elapsedMillis(startTime));
             return answer;
         } catch (RuntimeException exception) {
             log.error("Vehicle assistant request failed: durationMs={}", elapsedMillis(startTime), exception);
+            InvalidModelOutputException invalidOutput = findInvalidModelOutput(exception);
+            if (invalidOutput != null) {
+                throw invalidOutput;
+            }
             throw exception;
         } finally {
             if (previousRequestId == null) {
@@ -67,8 +86,21 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
         }
     }
 
+    private static AdviceResponse safetyResponse(SafetyResult result) {
+        return new AdviceResponse(Urgency.STOP_NOW, result.message(), true, result.reason());
+    }
+
     private static long elapsedMillis(long startTime) {
         return (System.nanoTime() - startTime) / 1_000_000;
+    }
+
+    private static InvalidModelOutputException findInvalidModelOutput(Throwable exception) {
+        for (Throwable cause = exception; cause != null; cause = cause.getCause()) {
+            if (cause instanceof InvalidModelOutputException invalidModelOutput) {
+                return invalidModelOutput;
+            }
+        }
+        return null;
     }
 
     private static List<String> extractDtcCodes(String message) {

@@ -29,6 +29,7 @@ class SafetyGuardTest {
                 Arguments.of("ब्रेक काम नहीं कर रहे हैं", true),
                 Arguments.of("బ్రేకులు పని చేయడం లేదు", true),
                 Arguments.of("brakes pani cheyatam ledu", true),
+                Arguments.of("Creta lo brake pani cheyyatledu, car aagatledu", true),
 
                 Arguments.of("The steering wheel is locked", true),
                 Arguments.of("My steering is jammed", true),

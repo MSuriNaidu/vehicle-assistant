@@ -28,7 +28,7 @@ public class SafetyGuard {
             "(?:ब्रेक\\s*(?:फेल|काम\\s+नहीं\\s+कर(?:ता|ते|रहे)?|नहीं\\s+लग(?:ते|रहे)?|खराब)|" +
             "brakes?\\s+(?:kaam\\s+nahi(?:n)?\\s+kar\\s+rahe|nahi(?:n)?\\s+lag\\s+rahe)|" +
             "(?:బ్రేక్(?:లు)?|బ్రేకులు)\\s*(?:ఫెయిల్|పని\\s+చేయడం\\s+లేదు|పని\\s+చేయటం\\s+లేదు)|" +
-            "brakes?\\s+(?:pani\\s+)?cheyatam\\s+ledu)";
+            "brakes?\\s+(?:pani\\s+)?(?:cheyatam\\s+ledu|cheyyatledu))";
 
     // Needs review by a native speaker; add romanised variants as seen in testing.
     private static final String STEERING_LOSS_LOCALIZED =
