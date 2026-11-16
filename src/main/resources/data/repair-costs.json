@@ -3,160 +3,256 @@
     "repair": "Spark plug replacement",
     "segment": "HATCHBACK",
     "minInr": 800,
-    "maxInr": 2500,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "maxInr": 2600,
+    "source": "SOURCED, FITTED TOTAL: low = 4 plugs x Rs 200 (Drivespark: Rs 200-1,000 per plug, no labour); high = Rs 2,600 for a fitted iridium set of 3 plugs (Vahanbazaar, Alto K10/WagonR). Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
     "repair": "Spark plug replacement",
     "segment": "SEDAN",
-    "minInr": 1000,
-    "maxInr": 3200,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 1500,
+    "maxInr": 4000,
+    "source": "LOW CONFIDENCE, segment-agnostic: Bino city pages (aggregator, parts+labour): Delhi Rs 800-2,500, Chandigarh Rs 1,500-3,500, Hyderabad Rs 1,500-4,000. Genuine plugs on 4-cyl sedans can cost more (CarDekho lists a Honda City plug at Rs 1,400). Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
     "repair": "Spark plug replacement",
     "segment": "COMPACT_SUV",
-    "minInr": 1000,
-    "maxInr": 3500,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 1500,
+    "maxInr": 4000,
+    "source": "LOW CONFIDENCE, segment-agnostic: Bino city pages (aggregator, parts+labour): Delhi Rs 800-2,500, Chandigarh Rs 1,500-3,500, Hyderabad Rs 1,500-4,000. Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
     "repair": "Spark plug replacement",
     "segment": "SUV",
     "minInr": 1500,
-    "maxInr": 5000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "maxInr": 4000,
+    "source": "LOW CONFIDENCE, segment-agnostic: Bino city pages (aggregator, parts+labour): Delhi Rs 800-2,500, Chandigarh Rs 1,500-3,500, Hyderabad Rs 1,500-4,000. Larger engines may cost more. Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
     "repair": "Spark plug replacement",
     "segment": "MPV",
-    "minInr": 1200,
+    "minInr": 1500,
     "maxInr": 4000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "source": "LOW CONFIDENCE, segment-agnostic: Bino city pages (aggregator, parts+labour): Delhi Rs 800-2,500, Chandigarh Rs 1,500-3,500, Hyderabad Rs 1,500-4,000. Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
     "repair": "Ignition coil replacement",
     "segment": "HATCHBACK",
-    "minInr": 1800,
-    "maxInr": 5000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 975,
+    "maxInr": 2750,
+    "source": "SOURCED PARTS + ASSUMED LABOUR, per coil: parts Rs 675-2,149 (IndiaMART Alto Rs 675; Maruti genuine Rs 1,155 on motrparts; MGP genuine Rs 2,149); labour ASSUMED Rs 300-600 (unverified). Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
     "repair": "Ignition coil replacement",
     "segment": "SEDAN",
-    "minInr": 2200,
-    "maxInr": 6000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 1550,
+    "maxInr": 2850,
+    "source": "SOURCED PARTS + ASSUMED LABOUR, per coil: parts Rs 1,250-2,250 (IndiaMART Honda City Rs 1,250; Flipkart Honda City Rs 2,016 and Verna Rs 1,798, MRP Rs 2,250); labour ASSUMED Rs 300-600 (unverified). Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
     "repair": "Ignition coil replacement",
     "segment": "COMPACT_SUV",
-    "minInr": 2200,
-    "maxInr": 6500,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 1200,
+    "maxInr": 6800,
+    "source": "SOURCED PARTS + ASSUMED LABOUR, per coil: parts Rs 888-6,191 (Creta aftermarket Rs 888-2,640 on boodmo; Mobis genuine Rs 3,991-6,191); labour ASSUMED Rs 300-600 (unverified). Range is wide: aftermarket vs genuine. Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
-    "repair": "Ignition coil replacement",
+    "repair": "Oxygen sensor replacement",
+    "segment": "HATCHBACK",
+    "minInr": 2100,
+    "maxInr": 4600,
+    "source": "SOURCED PARTS + ASSUMED LABOUR, per sensor: parts Rs 1,799-3,812 (PartsGuru Swift Rs 1,799; boodmo Maruti genuine Rs 1,955-2,560 with replacements from Rs 3,812; Bosch via IndiaMART Rs 3,126 excl. tax); labour ASSUMED Rs 300-800 (unverified). Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Brake pad replacement",
+    "segment": "HATCHBACK",
+    "minInr": 950,
+    "maxInr": 2450,
+    "source": "SOURCED PARTS + ASSUMED LABOUR, front axle set: parts Rs 450-1,653 (IndiaMART aftermarket Swift Rs 450; Kingdom of Spares Rane Swift Rs 1,653); labour ASSUMED Rs 500-800 (one 2016 quote showed Rs 500 brake overhaul labour). Authorised-centre prices may be higher. Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Brake pad replacement",
+    "segment": "SEDAN",
+    "minInr": 1450,
+    "maxInr": 3650,
+    "source": "SOURCED PARTS + ASSUMED LABOUR, front axle set: parts Rs 951-2,849 (Bosch Verna Rs 951 on Moglix; Uno Minda Verna/City MRP Rs 1,248-1,290; CarDekho lists Honda City genuine front pads at Rs 2,849); labour ASSUMED Rs 500-800 (unverified). Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Brake pad replacement",
+    "segment": "COMPACT_SUV",
+    "minInr": 1400,
+    "maxInr": 4600,
+    "source": "SOURCED PARTS + ASSUMED LABOUR, front axle set: parts Rs 898-3,798 (boodmo Creta Rs 898-2,564; Amazon.in Creta Rs 1,999; Hyundai genuine Rs 3,798 on motrparts); labour ASSUMED Rs 500-800 (unverified). Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Brake pad replacement",
     "segment": "SUV",
-    "minInr": 3000,
-    "maxInr": 9000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 2025,
+    "maxInr": 4500,
+    "source": "SOURCED PARTS + ASSUMED LABOUR, front axle set: parts Rs 1,525-3,700 (IndiaMART Scorpio Rs 1,525; Uno Minda Scorpio MRP Rs 1,696-1,885; TVS Fortuner Rs 1,889; one Scorpio retailer listing Rs 3,700); labour ASSUMED Rs 500-800 (unverified). Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
-    "repair": "Ignition coil replacement",
+    "repair": "Brake pad replacement",
     "segment": "MPV",
-    "minInr": 2500,
-    "maxInr": 8000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 1450,
+    "maxInr": 3500,
+    "source": "SOURCED PARTS + ASSUMED LABOUR, front axle set: parts Rs 950-2,699 (Hella Innova MRP Rs 950; TVS Innova Rs 1,154-1,364 and Crysta Rs 1,574; PartsGuru Ertiga Rs 2,699); labour ASSUMED Rs 500-800 (unverified). Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
-    "repair": "Oxygen sensor replacement",
+    "repair": "Battery replacement",
     "segment": "HATCHBACK",
-    "minInr": 2500,
-    "maxInr": 7000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 5200,
+    "maxInr": 9200,
+    "source": "SOURCED TOTAL, single published source (Ride N Repair battery guide, Apr 2026), battery only, Exide/Amaron: Alto Rs 5,200-6,200; Swift/Baleno/WagonR Rs 6,200-7,500; i20 Rs 7,200-9,200. Fitting is usually free at a battery shop; authorised centre adds Rs 500-1,200. Old-battery buyback (Rs 400-1,500) not deducted. Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
-    "repair": "Oxygen sensor replacement",
+    "repair": "Battery replacement",
     "segment": "SEDAN",
-    "minInr": 3000,
-    "maxInr": 8500,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
-    "asOf": "2026-11"
-  },
-  {
-    "repair": "Oxygen sensor replacement",
-    "segment": "COMPACT_SUV",
-    "minInr": 3000,
-    "maxInr": 9000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
-    "asOf": "2026-11"
-  },
-  {
-    "repair": "Oxygen sensor replacement",
-    "segment": "SUV",
-    "minInr": 4000,
+    "minInr": 7500,
     "maxInr": 12000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "source": "SOURCED TOTAL, single published source (Ride N Repair battery guide, Apr 2026), battery only, Exide/Amaron: Honda City/Amaze Rs 7,500-9,500; Verna Rs 9,000-12,000. Fitting is usually free at a battery shop; authorised centre adds Rs 500-1,200. Old-battery buyback (Rs 400-1,500) not deducted. Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
-    "repair": "Oxygen sensor replacement",
-    "segment": "MPV",
-    "minInr": 3500,
-    "maxInr": 10000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
-    "asOf": "2026-11"
-  },
-  {
-    "repair": "Brake pad replacement",
-    "segment": "HATCHBACK",
-    "minInr": 1800,
-    "maxInr": 5000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
-    "asOf": "2026-11"
-  },
-  {
-    "repair": "Brake pad replacement",
-    "segment": "SEDAN",
-    "minInr": 2500,
-    "maxInr": 7000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
-    "asOf": "2026-11"
-  },
-  {
-    "repair": "Brake pad replacement",
+    "repair": "Battery replacement",
     "segment": "COMPACT_SUV",
-    "minInr": 2500,
-    "maxInr": 7500,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 7200,
+    "maxInr": 12200,
+    "source": "SOURCED TOTAL, single published source (Ride N Repair battery guide, Apr 2026), battery only, Exide/Amaron: Venue Rs 7,200-9,200; Nexon/Punch Rs 7,500-9,500; Creta Rs 9,000-12,000; Seltos/Sonet Rs 9,200-12,200. Fitting is usually free at a battery shop; authorised centre adds Rs 500-1,200. Old-battery buyback (Rs 400-1,500) not deducted. Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
-    "repair": "Brake pad replacement",
+    "repair": "Battery replacement",
     "segment": "SUV",
-    "minInr": 3500,
-    "maxInr": 10000,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 11000,
+    "maxInr": 17500,
+    "source": "SOURCED TOTAL, single published source (Ride N Repair battery guide, Apr 2026), battery only, Exide/Amaron: Scorpio-N/XUV700 Rs 11,000-14,500; Fortuner/Hector Rs 13,500-17,500. Fitting is usually free at a battery shop; authorised centre adds Rs 500-1,200. Old-battery buyback (Rs 400-1,500) not deducted. Verify with local quotes.",
     "asOf": "2026-11"
   },
   {
-    "repair": "Brake pad replacement",
+    "repair": "Battery replacement",
     "segment": "MPV",
-    "minInr": 3000,
-    "maxInr": 8500,
-    "source": "Illustrative Indian independent-workshop estimate; parts and labour vary",
+    "minInr": 11500,
+    "maxInr": 15000,
+    "source": "SOURCED TOTAL, single published source (Ride N Repair battery guide, Apr 2026), battery only, Exide/Amaron: Innova Crysta/Hycross Rs 11,500-15,000. Fitting is usually free at a battery shop; authorised centre adds Rs 500-1,200. Old-battery buyback (Rs 400-1,500) not deducted. Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Clutch plate replacement",
+    "segment": "HATCHBACK",
+    "minInr": 9500,
+    "maxInr": 22000,
+    "source": "SOURCED TOTAL, single published source (Vahanbazaar clutch guide, Apr 2026), full clutch kit parts+labour, independent workshop low to authorised dealer high: Swift petrol Rs 9,500-13,500 / 14,000-19,000; i20 petrol Rs 11,500-15,500 / 16,000-22,000. Diesel adds roughly Rs 3,000-8,000; dual-mass flywheel is extra. Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Clutch plate replacement",
+    "segment": "SEDAN",
+    "minInr": 14500,
+    "maxInr": 28000,
+    "source": "SOURCED TOTAL, single published source (Vahanbazaar clutch guide, Apr 2026), full clutch kit parts+labour, independent workshop low to authorised dealer high: Honda City petrol Rs 14,500-20,500 / 20,000-28,000. Diesel adds roughly Rs 3,000-8,000; dual-mass flywheel is extra. Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Clutch plate replacement",
+    "segment": "COMPACT_SUV",
+    "minInr": 13500,
+    "maxInr": 25000,
+    "source": "SOURCED TOTAL, single published source (Vahanbazaar clutch guide, Apr 2026), full clutch kit parts+labour, independent workshop low to authorised dealer high: Nexon petrol Rs 13,500-18,500 / 18,000-25,000. Diesel adds roughly Rs 3,000-8,000; dual-mass flywheel is extra. Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Clutch plate replacement",
+    "segment": "SUV",
+    "minInr": 20500,
+    "maxInr": 42000,
+    "source": "SOURCED TOTAL, single published source (Vahanbazaar clutch guide, Apr 2026), full clutch kit parts+labour, independent workshop low to authorised dealer high: one model only, Scorpio DIESEL Rs 20,500-31,500 / 28,000-42,000 (petrol SUVs may differ). Diesel adds roughly Rs 3,000-8,000; dual-mass flywheel is extra. Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Wheel alignment",
+    "segment": "HATCHBACK",
+    "minInr": 500,
+    "maxInr": 900,
+    "source": "SOURCED TOTAL, single published source (Ride N Repair alignment guide, Apr 2026), multi-brand garage, per car: Swift/i20/Baleno Rs 500-900 (Hyderabad Rs 550-900). Authorised centres charge more (hatchback Rs 900-1,400, sedan Rs 1,100-1,700, SUV Rs 1,400-2,500). Balancing is separate (about Rs 300-600 per wheel). Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Wheel alignment",
+    "segment": "SEDAN",
+    "minInr": 700,
+    "maxInr": 1100,
+    "source": "SOURCED TOTAL, single published source (Ride N Repair alignment guide, Apr 2026), multi-brand garage, per car: Dzire/Amaze/Verna/City Rs 700-1,100 (Hyderabad Rs 750-1,100). Authorised centres charge more (hatchback Rs 900-1,400, sedan Rs 1,100-1,700, SUV Rs 1,400-2,500). Balancing is separate (about Rs 300-600 per wheel). Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Wheel alignment",
+    "segment": "COMPACT_SUV",
+    "minInr": 800,
+    "maxInr": 1200,
+    "source": "SOURCED TOTAL, single published source (Ride N Repair alignment guide, Apr 2026), multi-brand garage, per car: Brezza/Nexon/Venue/Sonet Rs 800-1,200; mid-size SUVs such as Creta Rs 900-1,400. Authorised centres charge more (hatchback Rs 900-1,400, sedan Rs 1,100-1,700, SUV Rs 1,400-2,500). Balancing is separate (about Rs 300-600 per wheel). Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Wheel alignment",
+    "segment": "SUV",
+    "minInr": 900,
+    "maxInr": 1600,
+    "source": "SOURCED TOTAL, single published source (Ride N Repair alignment guide, Apr 2026), multi-brand garage, per car: Creta/Seltos Rs 900-1,400; Scorpio-N/XUV700 Rs 1,000-1,600. Authorised centres charge more (hatchback Rs 900-1,400, sedan Rs 1,100-1,700, SUV Rs 1,400-2,500). Balancing is separate (about Rs 300-600 per wheel). Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "Wheel alignment",
+    "segment": "MPV",
+    "minInr": 1000,
+    "maxInr": 1600,
+    "source": "SOURCED TOTAL, single published source (Ride N Repair alignment guide, Apr 2026), multi-brand garage, per car: Innova/large SUV/MPV class Rs 1,000-1,600. Authorised centres charge more (hatchback Rs 900-1,400, sedan Rs 1,100-1,700, SUV Rs 1,400-2,500). Balancing is separate (about Rs 300-600 per wheel). Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "AC gas refill",
+    "segment": "HATCHBACK",
+    "minInr": 1200,
+    "maxInr": 2500,
+    "source": "SOURCED TOTAL, two published sources (Ride N Repair AC guide Apr 2026; Vahanbazaar May 2026), R-134a refill: local garage Rs 1,200-2,000, authorised centre Rs 1,800-3,500. Hatchback segment Rs 1,800-2,500. Premium 2020+ cars on R-1234yf cost Rs 6,500-13,000 (not covered). Prices rise 15-20% in peak summer. A refill does not fix a leak or a failed compressor. Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "AC gas refill",
+    "segment": "SEDAN",
+    "minInr": 1200,
+    "maxInr": 3500,
+    "source": "LOW CONFIDENCE, no sedan-specific figure; general R-134a range used. SOURCED TOTAL, two published sources (Ride N Repair AC guide Apr 2026; Vahanbazaar May 2026), R-134a refill: local garage Rs 1,200-2,000, authorised centre Rs 1,800-3,500.  Premium 2020+ cars on R-1234yf cost Rs 6,500-13,000 (not covered). Prices rise 15-20% in peak summer. A refill does not fix a leak or a failed compressor. Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "AC gas refill",
+    "segment": "COMPACT_SUV",
+    "minInr": 1200,
+    "maxInr": 3200,
+    "source": "LOW CONFIDENCE, SUV figure used for compact SUVs. SOURCED TOTAL, two published sources (Ride N Repair AC guide Apr 2026; Vahanbazaar May 2026), R-134a refill: local garage Rs 1,200-2,000, authorised centre Rs 1,800-3,500. SUV segment Rs 2,200-3,200. Premium 2020+ cars on R-1234yf cost Rs 6,500-13,000 (not covered). Prices rise 15-20% in peak summer. A refill does not fix a leak or a failed compressor. Verify with local quotes.",
+    "asOf": "2026-11"
+  },
+  {
+    "repair": "AC gas refill",
+    "segment": "SUV",
+    "minInr": 1200,
+    "maxInr": 3200,
+    "source": "SOURCED TOTAL, two published sources (Ride N Repair AC guide Apr 2026; Vahanbazaar May 2026), R-134a refill: local garage Rs 1,200-2,000, authorised centre Rs 1,800-3,500. SUV segment Rs 2,200-3,200. Premium 2020+ cars on R-1234yf cost Rs 6,500-13,000 (not covered). Prices rise 15-20% in peak summer. A refill does not fix a leak or a failed compressor. Verify with local quotes.",
     "asOf": "2026-11"
   }
 ]
