@@ -79,6 +79,13 @@ function formatTime(date: Date) {
   return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 }
 
+function emphasizeCostAmounts(markdown: string) {
+  return markdown.replace(
+    /(?<![\w*₹])(?:INR\s*|₹\s*)[\d,]+(?:\s*(?:-|–|—|to)\s*(?:(?:INR\s*)|₹\s*)?[\d,]+)?(?![\w*])/gi,
+    (amount) => `**${amount}**`,
+  );
+}
+
 function splitMechanicQuestions(answer: string) {
   const lines = answer.split(/\r?\n/);
   const questionsHeading = /^\s*(?:#{1,3}\s*)?(?:\*\*)?questions to ask (?:your )?mechanic(?:\*\*)?:?\s*$/i;
@@ -452,24 +459,32 @@ function AssistantMessage({
             <>
               {answerParts.before && (
                 <div className="markdown-answer">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{answerParts.before}</ReactMarkdown>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {emphasizeCostAmounts(answerParts.before)}
+                  </ReactMarkdown>
                 </div>
               )}
               <details className="mechanic-questions">
                 <summary>Questions to ask your mechanic <ChevronDown size={16} /></summary>
                 <div className="markdown-answer">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{answerParts.questions}</ReactMarkdown>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {emphasizeCostAmounts(answerParts.questions)}
+                  </ReactMarkdown>
                 </div>
               </details>
               {answerParts.after && (
                 <div className="markdown-answer">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{answerParts.after}</ReactMarkdown>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {emphasizeCostAmounts(answerParts.after)}
+                  </ReactMarkdown>
                 </div>
               )}
             </>
           ) : (
             <div className="markdown-answer">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{response.answer}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {emphasizeCostAmounts(response.answer)}
+              </ReactMarkdown>
             </div>
           )}
         </div>

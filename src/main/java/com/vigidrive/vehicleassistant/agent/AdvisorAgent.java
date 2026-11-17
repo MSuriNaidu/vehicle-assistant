@@ -23,6 +23,7 @@ public interface AdvisorAgent {
              say what important symptom detail is needed; do not blame an internal
              diagnosis step or invent a certainty.
           3. Estimated cost: use the supplied estimate and give its range in INR.
+             Bold the full INR amount range so the owner can spot it immediately.
              If no estimate is supplied, say
              "I don't have a price estimate for this repair yet. A mechanic can
              quote after inspection." Never mention tools, lookups, missing data
