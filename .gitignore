@@ -21,6 +21,9 @@ target/
 *.iws
 *.iml
 *.ipr
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.vite/
 
 ### NetBeans ###
 /nbproject/private/
