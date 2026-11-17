@@ -108,9 +108,18 @@
   {
     "id": "N06", "group": "NORMAL", "language": "en",
     "input": "My brakes squeak a little when I brake lightly, but the pedal feels normal. Brezza 2019.",
-    "acceptableUrgency": ["SERVICE_SOON", "ROUTINE", "DRIVE_CAREFULLY"],
+    "acceptableUrgency": ["SERVICE_SOON", "DRIVE_CAREFULLY"],
     "mustMention": ["brake pad"], "mustNotContain": ["tow", "stop driving"],
-    "notes": "Must NOT be STOP_NOW. Checks that the guard does not over-trigger on the word 'brakes'."
+    "notes": "Must not be ROUTINE or STOP_NOW. Checks that mild brake squeal is treated conservatively without over-triggering the safety guard."
+  },
+  {
+    "id": "N11", "group": "NORMAL", "language": "en",
+    "input": "My Hyundai i20 makes a squealing sound whenever I brake. The pedal feels normal. What should I do?",
+    "acceptableUrgency": ["SERVICE_SOON", "DRIVE_CAREFULLY"],
+    "mustMention": ["brake pad", "950", "2,450"],
+    "mustNotContain": ["routine", "tow", "stop driving"],
+    "expectFollowUp": true,
+    "notes": "Covers brake-noise triage, a clarifying question and the known i20 hatchback brake-pad estimate. Cost lookup is separately checked by VehicleToolsTest."
   },
   {
     "id": "N07", "group": "NORMAL", "language": "en",

@@ -22,6 +22,13 @@ public interface DiagnosisAgent {
           or ROUTINE. Do not use any other label or wording.
         - Set urgency conservatively: when unsure between two levels, choose the
           more urgent one.
+        - Brake-noise guidance: for mild squealing with normal braking, set
+          SERVICE_SOON (not ROUTINE) and include plausible causes such as pad wear
+          indicators, glazed pads, dust/debris or surface rust on the discs. For
+          grinding, worsening noise, pulling, vibration or any change in braking,
+          use at least DRIVE_CAREFULLY and recommend prompt inspection. If braking
+          is reduced, the pedal is abnormal, or the brakes fail, use STOP_NOW.
+          These are possibilities, not confirmed faults.
         - If make, model, year or key details are missing, do not assume them.
           List them in missingInfo instead.
         - Never claim certainty. You cannot inspect the car.

@@ -6,6 +6,7 @@ import {
   ArrowUp,
   ArrowUpRight,
   Check,
+  ChevronDown,
   CircleAlert,
   CircleHelp,
   Clock3,
@@ -19,6 +20,7 @@ import {
 } from "lucide-react";
 
 type Urgency = "STOP_NOW" | "DRIVE_CAREFULLY" | "SERVICE_SOON" | "ROUTINE";
+type ResponseLanguage = "AUTO" | "ENGLISH" | "HINDI" | "TELUGU";
 
 type AdviceResponse = {
   urgency: Urgency | null;
@@ -48,6 +50,13 @@ const prompts = [
   },
   {
     icon: Wrench,
+    title: "Brake sound",
+    detail: "Triage a squeal, grind or vibration",
+    question:
+      "My Hyundai i20 makes a squealing sound whenever I brake. The pedal feels normal. What should I do?",
+  },
+  {
+    icon: Wrench,
     title: "Unusual sound",
     detail: "Describe a noise or vibration",
     question:
@@ -70,12 +79,32 @@ function formatTime(date: Date) {
   return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 }
 
+function splitMechanicQuestions(answer: string) {
+  const lines = answer.split(/\r?\n/);
+  const questionsHeading = /^\s*(?:#{1,3}\s*)?(?:\*\*)?questions to ask (?:your )?mechanic(?:\*\*)?:?\s*$/i;
+  const nextSectionHeading = /^\s*(?:#{1,3}\s+|\*\*(?:next step|follow-up question)\b)/i;
+  const start = lines.findIndex((line) => questionsHeading.test(line));
+  if (start < 0) return null;
+
+  const endOffset = lines.slice(start + 1).findIndex((line) => nextSectionHeading.test(line));
+  const end = endOffset < 0 ? lines.length : start + 1 + endOffset;
+  const questions = lines.slice(start + 1, end).join("\n").trim();
+  if (!questions) return null;
+
+  return {
+    before: lines.slice(0, start).join("\n").trim(),
+    questions,
+    after: lines.slice(end).join("\n").trim(),
+  };
+}
+
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [draft, setDraft] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState("");
   const [failedQuestion, setFailedQuestion] = useState("");
+  const [responseLanguage, setResponseLanguage] = useState<ResponseLanguage>("AUTO");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const conversationRef = useRef<HTMLDivElement>(null);
   const hasConversation = messages.length > 0;
@@ -94,9 +123,10 @@ function App() {
     });
   }, [messages, isSending]);
 
-  async function sendMessage(text = draft, retry = false) {
+  async function sendMessage(text = draft, retry = false, apiQuestion = text) {
     const question = text.trim();
     if (!question || isSending) return;
+    const requestQuestion = apiQuestion.trim();
 
     setError("");
     setDraft("");
@@ -112,17 +142,18 @@ function App() {
       const response = await fetch("/api/ai/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question }),
+        body: JSON.stringify({ question: requestQuestion, language: responseLanguage }),
       });
 
       const body = await response.json().catch(() => null);
       if (!response.ok) {
-        const message =
-          typeof body?.message === "string"
-            ? body.message
-            : response.status === 429
-              ? "The assistant is busy right now. Please wait a moment and try again."
-              : "We couldn't get an answer right now. Please try again.";
+        const message = response.status === 400 && typeof body?.message === "string"
+          ? body.message
+          : response.status === 429 || response.status === 503
+            ? "The assistant is temporarily unavailable. Please wait a few minutes and try again."
+            : response.status === 502
+              ? "We couldn't reliably assess your vehicle issue. Please try again, or consult a qualified mechanic."
+              : "We couldn't complete your request. Please try again.";
         throw new Error(message);
       }
 
@@ -137,7 +168,7 @@ function App() {
       ]);
       setFailedQuestion("");
     } catch (requestError) {
-      setFailedQuestion(question);
+      setFailedQuestion(requestQuestion);
       setError(
         requestError instanceof TypeError
           ? "Couldn't reach the assistant. Check that the backend is running and try again."
@@ -170,6 +201,17 @@ function App() {
     setError("");
     setFailedQuestion("");
     textareaRef.current?.focus();
+  }
+
+  function answerQuickReply(reply: string) {
+    const originalQuestion = messages.find((message) => message.role === "user")?.text;
+    const detail = reply === "Only when cold"
+      ? "It happens only when the brakes are cold."
+      : `The sound is ${reply.toLowerCase()}.`;
+    const contextualQuestion = originalQuestion
+      ? `${originalQuestion}\n\nAdditional detail from the owner: ${detail}`
+      : detail;
+    void sendMessage(detail, false, contextualQuestion);
   }
 
   return (
@@ -206,7 +248,23 @@ function App() {
         <header className="topbar">
           <div className="breadcrumb"><span>VIGIDRIVE</span><span className="crumb-slash">/</span><strong>Assistant</strong></div>
           <div className="topbar-actions">
-            <div className="availability">PERSONAL ASSISTANT</div>
+            <label className="language-picker">
+              <span>RESPONSE LANGUAGE</span>
+              <span className="language-select-wrap">
+                <select
+                  value={responseLanguage}
+                  onChange={(event) => setResponseLanguage(event.target.value as ResponseLanguage)}
+                  aria-label="Response language"
+                  disabled={isSending}
+                >
+                  <option value="AUTO">Auto</option>
+                  <option value="ENGLISH">English</option>
+                  <option value="HINDI">हिन्दी</option>
+                  <option value="TELUGU">తెలుగు</option>
+                </select>
+                <ChevronDown size={13} aria-hidden="true" />
+              </span>
+            </label>
             <button className="new-chat-button" onClick={startNewChat} disabled={isSending}>
               <Plus size={15} />
               <span>New chat</span>
@@ -273,7 +331,12 @@ function App() {
                         <div className="message-timestamp">YOU <span>·</span> {formatTime(message.sentAt)}</div>
                       </div>
                     ) : (
-                      <AssistantMessage key={message.id} response={message.response} sentAt={message.sentAt} />
+                      <AssistantMessage
+                        key={message.id}
+                        response={message.response}
+                        sentAt={message.sentAt}
+                        onQuickReply={answerQuickReply}
+                      />
                     ))}
                     {isSending && <TypingIndicator />}
                   </div>
@@ -349,8 +412,19 @@ function App() {
   );
 }
 
-function AssistantMessage({ response, sentAt }: { response: AdviceResponse; sentAt: Date }) {
+function AssistantMessage({
+  response,
+  sentAt,
+  onQuickReply,
+}: {
+  response: AdviceResponse;
+  sentAt: Date;
+  onQuickReply: (reply: string) => void;
+}) {
   const urgency = response.urgency ? urgencyDetails[response.urgency] : null;
+  const hasFollowUp = /\?\s*$/.test(response.answer)
+    && /brake|noise|sound|squeal|grind/i.test(response.answer);
+  const answerParts = splitMechanicQuestions(response.answer);
   return (
     <article className="assistant-message">
       <div className="welcome-avatar"><Sparkles size={15} /></div>
@@ -361,7 +435,11 @@ function AssistantMessage({ response, sentAt }: { response: AdviceResponse; sent
             <div className={`urgency-banner ${urgency.className}`}>
               <span className="urgency-dot" />
               <strong>{urgency.label}</strong>
-              <span className="urgency-note">Based on what you’ve shared</span>
+              {response.urgency === "STOP_NOW" ? (
+                <span className="urgency-action">Pull over safely · Contact roadside assistance</span>
+              ) : (
+                <span className="urgency-note">Based on what you’ve shared</span>
+              )}
             </div>
           )}
           {response.safetyTriggered && (
@@ -370,10 +448,41 @@ function AssistantMessage({ response, sentAt }: { response: AdviceResponse; sent
               <span><strong>Safety alert</strong>{response.safetyReason?.replaceAll("_", " ").toLowerCase()}</span>
             </div>
           )}
-          <div className="markdown-answer">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{response.answer}</ReactMarkdown>
-          </div>
+          {answerParts ? (
+            <>
+              {answerParts.before && (
+                <div className="markdown-answer">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{answerParts.before}</ReactMarkdown>
+                </div>
+              )}
+              <details className="mechanic-questions">
+                <summary>Questions to ask your mechanic <ChevronDown size={16} /></summary>
+                <div className="markdown-answer">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{answerParts.questions}</ReactMarkdown>
+                </div>
+              </details>
+              {answerParts.after && (
+                <div className="markdown-answer">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{answerParts.after}</ReactMarkdown>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="markdown-answer">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{response.answer}</ReactMarkdown>
+            </div>
+          )}
         </div>
+        {hasFollowUp && (
+          <div className="quick-replies" aria-label="Quick replies">
+            <span>QUICK REPLY</span>
+            {["Squealing", "Grinding", "Clunking", "Only when cold"].map((reply) => (
+              <button key={reply} onClick={() => onQuickReply(reply)}>
+                {reply}
+              </button>
+            ))}
+          </div>
+        )}
         <div className="response-footnote"><ShieldCheck size={13} /> Helpful guidance—not a substitute for a mechanic’s inspection.</div>
       </div>
     </article>

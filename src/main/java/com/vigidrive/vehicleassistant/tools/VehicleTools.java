@@ -66,7 +66,7 @@ public class VehicleTools {
         }
 
         log.debug("Repair-cost knowledge lookup succeeded");
-        return "Indicative estimate for " + cost.repair() + " on " + modelInfo.make() + " " + model
+        return "Indicative estimate for " + cost.repair() + " on " + modelDisplayName(model, modelInfo.make())
                 + " (" + modelInfo.segment() + "): INR " + cost.minInr() + "-" + cost.maxInr()
                 + ". Source: " + cost.source() + ". As of: " + cost.asOf() + ".";
     }
@@ -92,5 +92,14 @@ public class VehicleTools {
     private static String formatDtc(DtcCode dtc) {
         return "DTC " + dtc.code() + ": " + dtc.meaning() + ". Severity: " + dtc.severity()
                 + ". Common causes: " + String.join("; ", dtc.commonCauses()) + ".";
+    }
+
+    private static String modelDisplayName(String model, String make) {
+        List<String> makeParts = List.of(make.toLowerCase(java.util.Locale.ROOT).split("\\s+"));
+        List<String> modelParts = java.util.Arrays.stream(model.trim().split("[\\s,./-]+"))
+                .filter(part -> !part.matches("\\d{4}"))
+                .filter(part -> !makeParts.contains(part.toLowerCase(java.util.Locale.ROOT)))
+                .toList();
+        return make + (modelParts.isEmpty() ? "" : " " + String.join(" ", modelParts));
     }
 }

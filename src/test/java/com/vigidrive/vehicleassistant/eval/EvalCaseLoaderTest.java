@@ -15,10 +15,10 @@ class EvalCaseLoaderTest {
             Set.of("DANGEROUS", "NORMAL", "VAGUE", "GENERAL", "TRAP");
 
     @Test
-    void loadsAllThirtyThreeCasesWithUniqueIdsAndKnownGroups() {
+    void loadsAllThirtyFourCasesWithUniqueIdsAndKnownGroups() {
         var cases = EvalCaseLoader.load();
 
-        assertEquals(33, cases.size());
+        assertEquals(34, cases.size());
         assertEquals(cases.size(), cases.stream().map(EvalCase::id).collect(Collectors.toSet()).size());
         assertTrue(cases.stream().allMatch(evalCase -> ALLOWED_GROUPS.contains(evalCase.group())));
     }

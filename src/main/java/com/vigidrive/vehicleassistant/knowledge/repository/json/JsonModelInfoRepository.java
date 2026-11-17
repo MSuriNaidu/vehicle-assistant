@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -27,6 +28,30 @@ public class JsonModelInfoRepository implements ModelInfoRepository {
         if (model == null || model.isBlank()) {
             return Optional.empty();
         }
-        return Optional.ofNullable(models.get(model.trim().toLowerCase(Locale.ROOT)));
+        String normalized = model.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", " ").trim();
+        ModelInfo exact = models.get(normalized.replace(" ", ""));
+        if (exact != null) {
+            return Optional.of(exact);
+        }
+
+        String[] parts = normalized.split("\\s+");
+        for (int index = parts.length - 1; index >= 0; index--) {
+            if (parts[index].matches("\\d{4}")) {
+                continue;
+            }
+            ModelInfo match = models.get(parts[index]);
+            if (match != null && isMakeCompatible(normalized, match)) {
+                return Optional.of(match);
+            }
+        }
+        return Optional.empty();
+    }
+
+    private boolean isMakeCompatible(String normalizedInput, ModelInfo modelInfo) {
+        return models.values().stream()
+                .map(ModelInfo::make)
+                .distinct()
+                .filter(make -> normalizedInput.contains(make.toLowerCase(Locale.ROOT)))
+                .allMatch(make -> Objects.equals(make, modelInfo.make()));
     }
 }

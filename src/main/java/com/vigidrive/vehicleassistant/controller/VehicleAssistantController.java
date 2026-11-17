@@ -2,6 +2,7 @@ package com.vigidrive.vehicleassistant.controller;
 
 import com.vigidrive.vehicleassistant.model.AdviceResponse;
 import com.vigidrive.vehicleassistant.model.ApiError;
+import com.vigidrive.vehicleassistant.model.ResponseLanguage;
 import com.vigidrive.vehicleassistant.service.VehicleAssistantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,10 +33,18 @@ public class VehicleAssistantController {
             return ResponseEntity.badRequest()
                     .body(new ApiError("Please enter a vehicle question."));
         }
-        return ResponseEntity.ok(vehicleAssistantService.ask(request.question().trim()));
+        String question = request.question().trim();
+        if (request.language() == null) {
+            return ResponseEntity.ok(vehicleAssistantService.ask(question));
+        }
+        return ResponseEntity.ok(vehicleAssistantService.ask(question, request.language()));
     }
 
-    public record ChatRequest(String question) {
+    public record ChatRequest(String question, ResponseLanguage language) {
+
+        public ChatRequest(String question) {
+            this(question, null);
+        }
     }
 
 }

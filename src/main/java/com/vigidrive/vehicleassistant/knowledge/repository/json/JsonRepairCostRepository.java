@@ -31,14 +31,21 @@ public class JsonRepairCostRepository implements RepairCostRepository {
         String query = normalize(repair);
         return costs.stream()
                 .filter(cost -> cost.segment() == segment)
-                .filter(cost -> normalize(cost.repair()).contains(query) || query.contains(normalize(cost.repair())))
+                .filter(cost -> matchesRepair(normalize(cost.repair()), query))
                 .findFirst();
+    }
+
+    private static boolean matchesRepair(String repair, String query) {
+        return repair.contains(query) || query.contains(repair);
     }
 
     private static String normalize(String value) {
         return value.trim().toLowerCase(Locale.ROOT)
                 .replaceAll("\\b(replacement|replace|repair|service)\\b", "")
                 .replaceAll("\\bplugs\\b", "plug")
+                .replaceAll("\\bpads\\b", "pad")
+                .replaceAll("\\bbrakes\\b", "brake")
+                .replaceAll("[^a-z0-9]+", " ")
                 .replaceAll("\\s+", " ")
                 .trim();
     }

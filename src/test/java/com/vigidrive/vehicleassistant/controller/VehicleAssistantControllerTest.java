@@ -3,6 +3,7 @@ package com.vigidrive.vehicleassistant.controller;
 import com.vigidrive.vehicleassistant.model.AdviceResponse;
 import com.vigidrive.vehicleassistant.model.ApiError;
 import com.vigidrive.vehicleassistant.model.Urgency;
+import com.vigidrive.vehicleassistant.model.ResponseLanguage;
 import com.vigidrive.vehicleassistant.service.VehicleAssistantService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,18 @@ class VehicleAssistantControllerTest {
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals(new ApiError("Please enter a vehicle question."), response.getBody());
+    }
+
+    @Test
+    void passesTheSelectedResponseLanguage() {
+        AdviceResponse expected = new AdviceResponse(Urgency.SERVICE_SOON, "Revise pronto.", false, null);
+        when(service.ask("My brake squeaks", ResponseLanguage.TELUGU)).thenReturn(expected);
+
+        ResponseEntity<?> response = controller.chat(
+                new VehicleAssistantController.ChatRequest("My brake squeaks", ResponseLanguage.TELUGU));
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expected, response.getBody());
+        verify(service).ask("My brake squeaks", ResponseLanguage.TELUGU);
     }
 }
