@@ -8,6 +8,7 @@ import com.vigidrive.vehicleassistant.model.Urgency;
 import com.vigidrive.vehicleassistant.model.VehicleIssue;
 import com.vigidrive.vehicleassistant.safety.SafetyGuard;
 import com.vigidrive.vehicleassistant.safety.SafetyResult;
+import dev.langchain4j.service.output.OutputParsingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -98,6 +99,10 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
         for (Throwable cause = exception; cause != null; cause = cause.getCause()) {
             if (cause instanceof InvalidModelOutputException invalidModelOutput) {
                 return invalidModelOutput;
+            }
+            if (cause instanceof OutputParsingException) {
+                return new InvalidModelOutputException(
+                        "The model returned output that does not match the required response schema.", cause);
             }
         }
         return null;

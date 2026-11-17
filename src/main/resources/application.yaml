@@ -11,8 +11,9 @@ langchain4j:
     chat-model:
       base-url: ${OPENAI_BASE_URL:https://openrouter.ai/api/v1}
       api-key: ${OPENAI_API_KEY}
-      model-name: ${OPENAI_MODEL:openrouter/free}
-      temperature: 0.7
+      model-name: ${OPENAI_MODEL:openrouter/free} #OPENAI_MODEL=baidu/ernie-5.5-flash-preview:free
+      temperature: ${OPENAI_TEMPERATURE:0.2}
+      response-format: json_schema
       max-retries: 5
       timeout: 90s
       log-requests: false

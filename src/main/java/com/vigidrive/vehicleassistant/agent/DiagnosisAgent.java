@@ -18,6 +18,8 @@ public interface DiagnosisAgent {
         - Return at most 4 causes. Each explanation is one plain sentence.
         - If a fault code is present, call the lookupDtc tool and use its result.
           Do not invent code meanings.
+        - Set urgency to exactly one of STOP_NOW, DRIVE_CAREFULLY, SERVICE_SOON,
+          or ROUTINE. Do not use any other label or wording.
         - Set urgency conservatively: when unsure between two levels, choose the
           more urgent one.
         - If make, model, year or key details are missing, do not assume them.

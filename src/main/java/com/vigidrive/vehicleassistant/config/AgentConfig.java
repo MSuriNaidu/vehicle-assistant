@@ -4,9 +4,9 @@ import com.vigidrive.vehicleassistant.agent.AdvisorAgent;
 import com.vigidrive.vehicleassistant.agent.CoordinatorAgent;
 import com.vigidrive.vehicleassistant.agent.DiagnosisAgent;
 import com.vigidrive.vehicleassistant.agent.IntakeAgent;
+import com.vigidrive.vehicleassistant.exception.InvalidModelOutputException;
 import com.vigidrive.vehicleassistant.model.AdviceResponse;
 import com.vigidrive.vehicleassistant.model.Diagnosis;
-import com.vigidrive.vehicleassistant.model.Urgency;
 import com.vigidrive.vehicleassistant.tools.VehicleTools;
 import dev.langchain4j.agentic.AgenticServices;
 import dev.langchain4j.model.chat.ChatModel;
@@ -50,10 +50,12 @@ public class AgentConfig {
                 .output(scope -> {
                     Object diagnosisValue = scope.readState("diagnosis");
                     Diagnosis diagnosis = diagnosisValue instanceof Diagnosis value ? value : null;
-                    Urgency urgency = diagnosis == null
-                            ? null
-                            : Urgency.fromModelValue(diagnosis.urgency());
-                    return new AdviceResponse(urgency, (String) scope.readState("answer"), false, null);
+                    if (diagnosis == null || diagnosis.urgency() == null) {
+                        throw new InvalidModelOutputException(
+                                "Diagnosis output must include a supported urgency value.");
+                    }
+                    return new AdviceResponse(
+                            diagnosis.urgency(), (String) scope.readState("answer"), false, null);
                 })
                 .build();
     }

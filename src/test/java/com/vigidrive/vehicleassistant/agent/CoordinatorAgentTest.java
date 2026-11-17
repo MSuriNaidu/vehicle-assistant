@@ -5,15 +5,15 @@ import com.vigidrive.vehicleassistant.model.Diagnosis;
 import com.vigidrive.vehicleassistant.model.AdviceResponse;
 import com.vigidrive.vehicleassistant.model.Urgency;
 import com.vigidrive.vehicleassistant.model.VehicleIssue;
-import com.vigidrive.vehicleassistant.exception.InvalidModelOutputException;
 import dev.langchain4j.agentic.AgenticServices;
+import dev.langchain4j.model.chat.request.json.JsonEnumSchema;
+import dev.langchain4j.model.chat.request.json.JsonObjectSchema;
+import dev.langchain4j.service.output.JsonSchemas;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,26 +21,15 @@ import static org.mockito.Mockito.when;
 class CoordinatorAgentTest {
 
     @Test
-    void rejectsUnsupportedModelUrgencyInsteadOfSilentlyMappingIt() {
-        InvalidModelOutputException exception = assertThrows(
-                InvalidModelOutputException.class, () -> Urgency.fromModelValue("MEDIUM"));
+    void diagnosisSchemaRestrictsUrgencyToTheSupportedEnumValues() {
+        JsonObjectSchema schema = (JsonObjectSchema) JsonSchemas.jsonSchemaFrom(Diagnosis.class)
+                .orElseThrow()
+                .rootElement();
 
-        assertEquals(
-                "Unsupported diagnosis urgency 'MEDIUM'. Expected one of: "
-                        + "STOP_NOW, DRIVE_CAREFULLY, SERVICE_SOON, ROUTINE.",
-                exception.getMessage());
-    }
-
-    @Test
-    void acceptsSupportedUrgencyFormattingAndExplainsUnknownValues() {
-        assertEquals(Urgency.STOP_NOW, Urgency.fromModelValue("stop-now"));
-        assertEquals(Urgency.SERVICE_SOON, Urgency.fromModelValue("service soon"));
-        assertNull(Urgency.fromModelValue("  "));
-
-        InvalidModelOutputException exception = assertThrows(
-                InvalidModelOutputException.class, () -> Urgency.fromModelValue("UNRECOGNIZED"));
-        org.junit.jupiter.api.Assertions.assertTrue(
-                exception.getMessage().contains("Unsupported diagnosis urgency"));
+        JsonEnumSchema urgencySchema = (JsonEnumSchema) schema.properties().get("urgency");
+        assertEquals(List.of("STOP_NOW", "DRIVE_CAREFULLY", "SERVICE_SOON", "ROUTINE"),
+                urgencySchema.enumValues());
+        org.junit.jupiter.api.Assertions.assertTrue(schema.required().contains("urgency"));
     }
 
     @Test
@@ -49,7 +38,7 @@ class CoordinatorAgentTest {
         AdvisorAgent advisor = mock(AdvisorAgent.class);
         VehicleIssue issue = new VehicleIssue("Maruti Suzuki", "Swift", 2020,
                 List.of("engine misfire"), List.of("P0300"));
-        Diagnosis result = new Diagnosis("SERVICE_SOON",
+        Diagnosis result = new Diagnosis(Urgency.SERVICE_SOON,
                 List.of(new Cause("Spark plug fault", 70, "A worn plug may cause a misfire.")));
 
         when(diagnosis.diagnose(issue)).thenReturn(result);
@@ -62,7 +51,7 @@ class CoordinatorAgentTest {
                     Diagnosis sharedDiagnosis = (Diagnosis) scope.readState("diagnosis");
                     String answer = (String) scope.readState("answer");
                     return new AdviceResponse(
-                            Urgency.valueOf(sharedDiagnosis.urgency()), answer, false, null);
+                            sharedDiagnosis.urgency(), answer, false, null);
                 })
                 .build();
 

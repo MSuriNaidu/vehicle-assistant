@@ -7,6 +7,7 @@ import com.vigidrive.vehicleassistant.model.AdviceResponse;
 import com.vigidrive.vehicleassistant.model.Urgency;
 import com.vigidrive.vehicleassistant.model.VehicleIssue;
 import com.vigidrive.vehicleassistant.safety.SafetyGuard;
+import dev.langchain4j.service.output.OutputParsingException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -77,5 +78,20 @@ class VehicleAssistantServiceImplTest {
                 InvalidModelOutputException.class, () -> service.ask("My car makes a noise"));
 
         assertEquals(invalidOutput.getMessage(), thrown.getMessage());
+    }
+
+    @Test
+    void mapsSchemaParsingFailuresToInvalidModelOutput() {
+        VehicleIssue issue = new VehicleIssue(null, null, null, java.util.List.of(), java.util.List.of());
+        when(intakeAgent.intakeVehicleIssue("My car makes a noise")).thenReturn(issue);
+        when(coordinatorAgent.coordinate("My car makes a noise", issue))
+                .thenThrow(new RuntimeException("Agent invocation failed",
+                        new OutputParsingException("Could not parse agent output", null)));
+
+        InvalidModelOutputException thrown = assertThrows(
+                InvalidModelOutputException.class, () -> service.ask("My car makes a noise"));
+
+        assertEquals("The model returned output that does not match the required response schema.",
+                thrown.getMessage());
     }
 }
