@@ -28,8 +28,8 @@ langchain4j:
       model-name: ${OPENAI_MODEL:openrouter/free} #OPENAI_MODEL=baidu/ernie-5.5-flash-preview:free #baidu/ernie-light-dt-1.0-intl
       temperature: ${OPENAI_TEMPERATURE:0.2}
       response-format: json_schema
-      max-retries: 5
-      max-tokens: 4096
+      max-retries: 2
+      max-tokens: ${OPENAI_MAX_TOKENS:3000}
       timeout: 90s
       log-requests: false
       log-responses: false
