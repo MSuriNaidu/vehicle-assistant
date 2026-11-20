@@ -1,8 +1,8 @@
 package com.vigidrive.vehicleassistant.controller;
 
 import com.vigidrive.vehicleassistant.model.AdviceResponse;
+import com.vigidrive.vehicleassistant.model.AdviceUrgency;
 import com.vigidrive.vehicleassistant.model.ApiError;
-import com.vigidrive.vehicleassistant.model.Urgency;
 import com.vigidrive.vehicleassistant.model.ResponseLanguage;
 import com.vigidrive.vehicleassistant.service.VehicleAssistantService;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,8 @@ class VehicleAssistantControllerTest {
 
     @Test
     void postsJsonQuestionToAssistant() {
-        AdviceResponse expected = new AdviceResponse(Urgency.SERVICE_SOON, "Get it checked soon.", false, null);
+        AdviceResponse expected = new AdviceResponse(
+                AdviceUrgency.SERVICE_SOON, "Get it checked soon.", false, null);
         when(service.ask("My car makes a noise")).thenReturn(expected);
 
         ResponseEntity<?> response = controller.chat(
@@ -42,7 +43,8 @@ class VehicleAssistantControllerTest {
 
     @Test
     void passesTheSelectedResponseLanguage() {
-        AdviceResponse expected = new AdviceResponse(Urgency.SERVICE_SOON, "Revise pronto.", false, null);
+        AdviceResponse expected = new AdviceResponse(
+                AdviceUrgency.SERVICE_SOON, "Revise pronto.", false, null);
         when(service.ask("My brake squeaks", ResponseLanguage.TELUGU)).thenReturn(expected);
 
         ResponseEntity<?> response = controller.chat(

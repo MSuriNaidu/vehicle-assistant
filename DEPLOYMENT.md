@@ -6,9 +6,9 @@ API as one Docker web service. Spring Boot serves the frontend build and handles
 proxy or require CORS configuration.
 
 1. Push the repository to GitHub and create a Render Blueprint from it.
-2. Enter `OPENAI_API_KEY` when Render prompts for the secret. Set `OPENAI_MODEL`
-   to a provider model that supports the application's JSON Schema output.
-   `OPENAI_BASE_URL` defaults to OpenRouter and can be overridden in Render.
+2. Enter `GROQ_API_KEY` when Render prompts for the secret. `GROQ_BASE_URL`
+   defaults to Groq's OpenAI-compatible endpoint and `GROQ_MODEL` defaults to
+   `openai/gpt-oss-120b`. Override those values for another compatible provider.
 3. Wait for the Docker build and deploy to finish. Render supplies `PORT`; the
    app binds to that port.
 4. Verify `/actuator/health`, load the app, and submit a chat request.

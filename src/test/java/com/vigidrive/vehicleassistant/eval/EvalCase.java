@@ -1,6 +1,6 @@
 package com.vigidrive.vehicleassistant.eval;
 
-import com.vigidrive.vehicleassistant.model.Urgency;
+import com.vigidrive.vehicleassistant.model.AdviceUrgency;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public record EvalCase(
         String group,
         String language,
         String input,
-        List<Urgency> acceptableUrgency,
+        List<AdviceUrgency> acceptableUrgency,
         List<String> mustMention,
         List<String> mustNotContain,
         Boolean expectFollowUp,

@@ -8,10 +8,10 @@ final class EvalTierConfiguration {
     }
 
     static String requireApiKey(Map<String, String> environment) {
-        String apiKey = environment.get("OPENAI_API_KEY");
+        String apiKey = environment.get("GROQ_API_KEY");
         if (apiKey == null || apiKey.isBlank()) {
             throw new IllegalStateException(
-                    "The eval tier requires OPENAI_API_KEY because this application is configured for OpenRouter.");
+                    "The eval tier requires GROQ_API_KEY for the configured OpenAI-compatible provider.");
         }
         return apiKey;
     }

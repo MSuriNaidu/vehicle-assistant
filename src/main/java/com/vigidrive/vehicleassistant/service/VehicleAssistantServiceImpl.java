@@ -1,46 +1,31 @@
 package com.vigidrive.vehicleassistant.service;
 
 import com.vigidrive.vehicleassistant.agent.CoordinatorAgent;
-import com.vigidrive.vehicleassistant.agent.IntakeAgent;
 import com.vigidrive.vehicleassistant.exception.InvalidModelOutputException;
 import com.vigidrive.vehicleassistant.model.AdviceResponse;
+import com.vigidrive.vehicleassistant.model.AdviceUrgency;
 import com.vigidrive.vehicleassistant.model.ResponseLanguage;
-import com.vigidrive.vehicleassistant.model.Urgency;
-import com.vigidrive.vehicleassistant.model.VehicleIssue;
-import com.vigidrive.vehicleassistant.safety.SafetyGuard;
-import com.vigidrive.vehicleassistant.safety.SafetyResult;
 import dev.langchain4j.service.output.OutputParsingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
 public class VehicleAssistantServiceImpl implements VehicleAssistantService {
 
     private static final Logger log = LoggerFactory.getLogger(VehicleAssistantServiceImpl.class);
-    private static final Pattern DTC_CODE_PATTERN =
-            Pattern.compile("\\bP\\d{4}\\b", Pattern.CASE_INSENSITIVE);
     private static final Pattern URGENCY_HEADING_PATTERN = Pattern.compile(
             "^\\s*(?:#{1,3}\\s+)?(?:\\*{1,2})?(?:urgency|तत्कालता|అత్యవసరం)(?:\\*{1,2})?\\s*:?.*$",
             Pattern.CASE_INSENSITIVE);
 
-    private final IntakeAgent intakeAgent;
     private final CoordinatorAgent coordinatorAgent;
-    private final SafetyGuard safetyGuard;
 
-    public VehicleAssistantServiceImpl(IntakeAgent intakeAgent,
-                                       CoordinatorAgent coordinatorAgent,
-                                       SafetyGuard safetyGuard) {
-        this.intakeAgent = intakeAgent;
+    public VehicleAssistantServiceImpl(CoordinatorAgent coordinatorAgent) {
         this.coordinatorAgent = coordinatorAgent;
-        this.safetyGuard = safetyGuard;
     }
 
     @Override
@@ -58,27 +43,9 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
         try {
             log.info("Vehicle assistant request started");
 
-            SafetyResult messageSafety = safetyGuard.check(question);
-            if (messageSafety.dangerous()) {
-                log.warn("Request stopped by safety guard: reason={}", messageSafety.reason());
-                return safetyResponse(messageSafety);
-            }
-
-            log.info("Starting intake agent");
-            VehicleIssue vehicleIssue = intakeAgent.intakeVehicleIssue(question);
-            List<String> dtcCodes = new ArrayList<>(extractDtcCodes(question));
-            if (vehicleIssue != null && vehicleIssue.dtcCodes() != null) {
-                dtcCodes.addAll(vehicleIssue.dtcCodes());
-            }
-            SafetyResult dtcSafety = safetyGuard.checkDtcCodes(dtcCodes);
-            if (dtcSafety.dangerous()) {
-                log.warn("Request stopped by DTC safety check: reason={}", dtcSafety.reason());
-                return safetyResponse(dtcSafety);
-            }
-
-            log.info("Starting diagnosis and advisor sequence");
+            log.info("Starting intake and vehicle assessment workflow");
             ResponseLanguage language = responseLanguage == null ? ResponseLanguage.AUTO : responseLanguage;
-            AdviceResponse answer = coordinatorAgent.coordinate(question, vehicleIssue, language.name());
+            AdviceResponse answer = coordinatorAgent.coordinate(question, language.name());
             answer = alignUrgencyText(answer, question, language);
             log.info("Vehicle assistant request completed: durationMs={}", elapsedMillis(startTime));
             return answer;
@@ -96,10 +63,6 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
                 MDC.put("requestId", previousRequestId);
             }
         }
-    }
-
-    private static AdviceResponse safetyResponse(SafetyResult result) {
-        return new AdviceResponse(Urgency.STOP_NOW, result.message(), true, result.reason());
     }
 
     private static AdviceResponse alignUrgencyText(
@@ -153,7 +116,7 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
         return language;
     }
 
-    private static String urgencyText(Urgency urgency, ResponseLanguage language) {
+    private static String urgencyText(AdviceUrgency urgency, ResponseLanguage language) {
         return switch (language) {
             case HINDI -> hindiUrgencyText(urgency);
             case TELUGU -> teluguUrgencyText(urgency);
@@ -161,7 +124,7 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
         };
     }
 
-    private static String englishUrgencyText(Urgency urgency) {
+    private static String englishUrgencyText(AdviceUrgency urgency) {
         return switch (urgency) {
             case STOP_NOW -> "Stop driving. Pull over safely and contact roadside assistance or a tow service.";
             case DRIVE_CAREFULLY -> "Drive only if braking and steering remain normal, and arrange a prompt inspection.";
@@ -170,7 +133,7 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
         };
     }
 
-    private static String hindiUrgencyText(Urgency urgency) {
+    private static String hindiUrgencyText(AdviceUrgency urgency) {
         return switch (urgency) {
             case STOP_NOW -> "गाड़ी चलाना रोकें। सुरक्षित जगह पर रुकें और रोडसाइड सहायता या टो सेवा बुलाएँ।";
             case DRIVE_CAREFULLY -> "केवल तभी सावधानी से चलाएँ जब ब्रेक और स्टीयरिंग सामान्य हों; जल्द जाँच करवाएँ।";
@@ -179,7 +142,7 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
         };
     }
 
-    private static String teluguUrgencyText(Urgency urgency) {
+    private static String teluguUrgencyText(AdviceUrgency urgency) {
         return switch (urgency) {
             case STOP_NOW -> "వాహనం నడపడం ఆపండి. సురక్షితంగా ఆపి రోడ్‌సైడ్ సహాయం లేదా టో సేవకు కాల్ చేయండి.";
             case DRIVE_CAREFULLY -> "బ్రేకులు, స్టీరింగ్ సాధారణంగా పనిచేస్తేనే జాగ్రత్తగా నడపండి; త్వరగా తనిఖీ చేయించండి.";
@@ -205,15 +168,4 @@ public class VehicleAssistantServiceImpl implements VehicleAssistantService {
         return null;
     }
 
-    private static List<String> extractDtcCodes(String message) {
-        if (message == null || message.isBlank()) {
-            return List.of();
-        }
-        Matcher matcher = DTC_CODE_PATTERN.matcher(message);
-        List<String> codes = new ArrayList<>();
-        while (matcher.find()) {
-            codes.add(matcher.group());
-        }
-        return codes;
-    }
 }

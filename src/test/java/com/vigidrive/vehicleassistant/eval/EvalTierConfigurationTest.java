@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class EvalTierConfigurationTest {
 
     @Test
-    void requiresAnOpenRouterApiKey() {
+    void requiresAProviderApiKey() {
         assertThrows(IllegalStateException.class, () -> EvalTierConfiguration.requireApiKey(Map.of()));
-        assertNotNull(EvalTierConfiguration.requireApiKey(Map.of("OPENAI_API_KEY", "configured")));
+        assertNotNull(EvalTierConfiguration.requireApiKey(Map.of("GROQ_API_KEY", "configured")));
     }
 
     @Test

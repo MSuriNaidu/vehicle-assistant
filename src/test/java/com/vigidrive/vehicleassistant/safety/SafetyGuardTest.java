@@ -32,6 +32,9 @@ class SafetyGuardTest {
                 Arguments.of("Creta lo brake pani cheyyatledu, car aagatledu", true),
 
                 Arguments.of("The steering wheel is locked", true),
+                Arguments.of("The steering has failed", true),
+                Arguments.of("I have lost steering", true),
+                Arguments.of("I lost control of the car", true),
                 Arguments.of("My steering is jammed", true),
                 Arguments.of("The steering is not responding", true),
                 Arguments.of("I can't steer the car", true),

@@ -20,16 +20,6 @@ logging:
   pattern:
     level: "%5p [requestId:%X{requestId:-}]"
 
-langchain4j:
-  open-ai:
-    chat-model:
-      base-url: ${OPENAI_BASE_URL:https://openrouter.ai/api/v1}
-      api-key: ${OPENAI_API_KEY}
-      model-name: ${OPENAI_MODEL:openrouter/free} #OPENAI_MODEL=baidu/ernie-5.5-flash-preview:free #baidu/ernie-light-dt-1.0-intl
-      temperature: ${OPENAI_TEMPERATURE:0.2}
-      response-format: json_schema
-      max-retries: 2
-      max-tokens: ${OPENAI_MAX_TOKENS:3000}
-      timeout: 90s
-      log-requests: false
-      log-responses: false
+vigidrive:
+  safety:
+    dangerous-dtc-codes: ${SAFETY_DANGEROUS_DTC_CODES:P0217}

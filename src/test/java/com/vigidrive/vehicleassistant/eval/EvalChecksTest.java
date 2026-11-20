@@ -1,7 +1,7 @@
 package com.vigidrive.vehicleassistant.eval;
 
 import com.vigidrive.vehicleassistant.model.AdviceResponse;
-import com.vigidrive.vehicleassistant.model.Urgency;
+import com.vigidrive.vehicleassistant.model.AdviceUrgency;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,8 +14,8 @@ class EvalChecksTest {
     @Test
     void checksUrgencyAndRequiredTermsWithoutCaseSensitivity() {
         EvalCase evalCase = evaluationCase(
-                List.of(Urgency.SERVICE_SOON), List.of("Oil", "Check engine"), List.of(), false);
-        AdviceResponse response = response(Urgency.SERVICE_SOON, "Check Engine and OIL soon.");
+                List.of(AdviceUrgency.SERVICE_SOON), List.of("Oil", "Check engine"), List.of(), false);
+        AdviceResponse response = response(AdviceUrgency.SERVICE_SOON, "Check Engine and OIL soon.");
 
         assertTrue(new UrgencyCheck().check(evalCase, response).passed());
         assertTrue(new MustMentionCheck().check(evalCase, response).passed());
@@ -25,8 +25,8 @@ class EvalChecksTest {
     @Test
     void reportsUnexpectedUrgencyAndForbiddenTerms() {
         EvalCase evalCase = evaluationCase(
-                List.of(Urgency.ROUTINE), List.of(), List.of("ignore safety"), false);
-        AdviceResponse response = response(Urgency.STOP_NOW, "Please IGNORE SAFETY.");
+                List.of(AdviceUrgency.ROUTINE), List.of(), List.of("ignore safety"), false);
+        AdviceResponse response = response(AdviceUrgency.STOP_NOW, "Please IGNORE SAFETY.");
 
         assertFalse(new UrgencyCheck().check(evalCase, response).passed());
         assertFalse(new MustNotContainCheck().check(evalCase, response).passed());
@@ -44,7 +44,7 @@ class EvalChecksTest {
     }
 
     private static EvalCase evaluationCase(
-            List<Urgency> acceptableUrgency,
+            List<AdviceUrgency> acceptableUrgency,
             List<String> mustMention,
             List<String> mustNotContain,
             boolean expectFollowUp) {
@@ -52,7 +52,7 @@ class EvalChecksTest {
                 mustMention, mustNotContain, expectFollowUp, "");
     }
 
-    private static AdviceResponse response(Urgency urgency, String answer) {
+    private static AdviceResponse response(AdviceUrgency urgency, String answer) {
         return new AdviceResponse(urgency, answer, false, null);
     }
 }

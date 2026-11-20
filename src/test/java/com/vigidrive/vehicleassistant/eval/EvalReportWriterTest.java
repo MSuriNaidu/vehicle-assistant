@@ -1,6 +1,6 @@
 package com.vigidrive.vehicleassistant.eval;
 
-import com.vigidrive.vehicleassistant.model.Urgency;
+import com.vigidrive.vehicleassistant.model.AdviceUrgency;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -48,7 +48,7 @@ class EvalReportWriterTest {
     void writesBothReportsAndPrintsTheSameContents() throws IOException {
         List<EvalCase> cases = List.of(evaluationCase("R01", "NORMAL", ""));
         List<EvalResult> results = List.of(result("R01", "NORMAL", EvalOutcome.PASS,
-                List.of(Urgency.ROUTINE.name()), List.of("All good.")));
+                List.of(AdviceUrgency.ROUTINE.name()), List.of("All good.")));
         ByteArrayOutputStream console = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
 

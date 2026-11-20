@@ -42,7 +42,7 @@ class PipelineEvalTest {
     @Value("${eval.max-retries:3}")
     private int maxRetries;
 
-    @Value("${langchain4j.open-ai.chat-model.model-name:openrouter/free}")
+    @Value("${GROQ_MODEL:openai/gpt-oss-120b}")
     private String modelName;
 
     @BeforeAll

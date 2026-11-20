@@ -3,7 +3,7 @@ package com.vigidrive.vehicleassistant.eval;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vigidrive.vehicleassistant.model.Urgency;
+import com.vigidrive.vehicleassistant.model.AdviceUrgency;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,7 +87,7 @@ public final class EvalCaseLoader {
         for (JsonNode urgency : urgencies) {
             String value = urgency.asText();
             try {
-                Urgency.valueOf(value);
+                AdviceUrgency.valueOf(value);
             } catch (IllegalArgumentException exception) {
                 throw new IllegalArgumentException("Unknown urgency '" + value + "' in evaluation case "
                         + caseId + ".", exception);

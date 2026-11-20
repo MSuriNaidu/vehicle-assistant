@@ -1,6 +1,6 @@
 package com.vigidrive.vehicleassistant.eval;
 
-import com.vigidrive.vehicleassistant.model.Urgency;
+import com.vigidrive.vehicleassistant.model.AdviceUrgency;
 import com.vigidrive.vehicleassistant.safety.SafetyGuard;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -46,7 +46,7 @@ class SafetyGuardEvalTest {
 
     private static Stream<Arguments> stopNowCases() {
         return EvalCaseLoader.load().stream()
-                .filter(evalCase -> evalCase.acceptableUrgency().equals(List.of(Urgency.STOP_NOW)))
+                .filter(evalCase -> evalCase.acceptableUrgency().equals(List.of(AdviceUrgency.STOP_NOW)))
                 .map(evalCase -> Arguments.of(evalCase.id(), evalCase));
     }
 

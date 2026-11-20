@@ -1,6 +1,7 @@
 package com.vigidrive.vehicleassistant.safety;
 
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.Locale;
@@ -21,7 +22,7 @@ public class SafetyGuard {
             మెకానిక్ తనిఖీ చేసే వరకు వాహనం నడపవద్దు.
             """;
 
-    private static final Set<String> DANGEROUS_DTC_CODES = Set.of("P0217");
+    private Set<String> dangerousDtcCodes = Set.of("P0217");
 
     // Needs review by a native speaker; add romanised variants as seen in testing.
     private static final String BRAKE_FAILURE_LOCALIZED =
@@ -57,14 +58,20 @@ public class SafetyGuard {
     private static final List<Rule> RULES = List.of(
             new Rule("BRAKE_FAILURE", compile(
                     "(?:\\bbrakes?\\s+(?:fail(?:ed|ure)?|(?:(?:is|are)\\s+)?not\\s+working|gone|stopped\\s+working)\\b|" +
-                    "\\bno\\s+brakes?\\b|\\bspongy\\s+(?:brake\\s+pedal|brakes?)\\b|" +
+                    "\\bloss\\s+of\\s+braking\\b|\\blost\\s+braking\\b|\\bno\\s+brakes?\\b|" +
+                    "\\bspongy\\s+(?:brake\\s+pedal|brakes?)\\b|" +
                     "\\bbrake\\s+pedal\\s+(?:is\\s+)?(?:going\\s+(?:down|to\\s+(?:the\\s+)?floor)|" +
                     "sinking(?:\\s+to\\s+(?:the\\s+)?floor)?|touching\\s+(?:the\\s+)?floor)\\b|" +
                     BRAKE_FAILURE_LOCALIZED + ")")),
             new Rule("STEERING_LOSS", compile(
-                    "(?:\\bsteering\\s+(?:wheel\\s+)?(?:is\\s+)?(?:locked|stuck|jammed|not\\s+responding|failed|lost)\\b|" +
-                    "\\b(?:lost|failed)\\s+steering\\b|\\b(?:can't|cannot)\\s+steer\\b|\\bunable\\s+to\\s+steer\\b|" +
+                    "(?:\\bsteering\\s+(?:wheel\\s+)?(?:(?:is|has)\\s+)?(?:locked|stuck|jammed|not\\s+responding|failed|lost)\\b|" +
+                    "\\bsteering\\s+(?:failure|system\\s+failure)\\b|\\bloss\\s+of\\s+steering\\b|" +
+                    "\\b(?:lost|failed)\\s+steering\\b|" +
+                    "\\b(?:can't|cannot)\\s+steer\\b|\\bunable\\s+to\\s+steer\\b|" +
                     STEERING_LOSS_LOCALIZED + ")")),
+            new Rule("LOSS_OF_CONTROL", compile(
+                    "\\b(?:lost control|loss of control|car is out of control|vehicle is out of control|" +
+                    "unable to control the (?:car|vehicle))\\b")),
             new Rule("OVERHEATING", compile(
                     "(?:\\boverheat(?:ed|ing)?\\b|" +
                     "\\btemperature\\s+(?:needle|gauge)\\s+(?:is\\s+)?in\\s+the\\s+red\\b|" +
@@ -76,8 +83,15 @@ public class SafetyGuard {
                     FUEL_SMELL_LOCALIZED + ")")),
             new Rule("SMOKE_OR_FIRE", compile(
                     "(?:\\b(?<!no\\s)smoke\\s+(?:(?:is\\s+)?coming\\s+)?from\\b|" +
-                    "\\bburning\\s+smell\\b|\\bcaught\\s+fire\\b|\\bon\\s+fire\\b|\\bflames?\\b|" +
+                    "\\bburning\\s+smell\\b|\\bcaught\\s+fire\\b|\\bon\\s+fire\\b|" +
+                    "\\bfire\\s+(?:in|under|inside)\\b|\\bflames?\\b|" +
                     SMOKE_OR_FIRE_LOCALIZED + ")")),
+            new Rule("AIRBAG_WARNING", compile(
+                    "\\b(?:air\\s*bag|srs)\\s+(?:warning\\s+)?light\\s+(?:is\\s+)?(?:on|lit|flashing)\\b|" +
+                    "\\b(?:air\\s*bag|srs)\\s+(?:system\\s+)?warning\\b")),
+            new Rule("CRITICAL_WARNING_LIGHT", compile(
+                    "\\b(?:critical|red|brake)\\s+warning\\s+light\\s+(?:is\\s+)?(?:on|lit)\\b|" +
+                    "\\b(?:battery|coolant\\s+temperature)\\s+warning\\s+light\\s+(?:is\\s+)?(?:on|lit)\\b")),
             new Rule("OIL_PRESSURE", compile(
                     "(?:\\boil\\s+pressure\\s+(?:warning\\s+)?light\\b|" +
                     "\\boil\\s+pressure\\s+warning\\b|\\boil\\s+warning\\s+light\\b|" +
@@ -103,11 +117,20 @@ public class SafetyGuard {
         }
 
         for (String code : codes) {
-            if (code != null && DANGEROUS_DTC_CODES.contains(code.trim().toUpperCase(Locale.ROOT))) {
+            if (code != null && dangerousDtcCodes.contains(code.trim().toUpperCase(Locale.ROOT))) {
                 return new SafetyResult(true, "DTC_" + code.trim().toUpperCase(Locale.ROOT), STOP_MESSAGE);
             }
         }
         return SafetyResult.safe();
+    }
+
+    @Value("${vigidrive.safety.dangerous-dtc-codes:P0217}")
+    void setDangerousDtcCodes(String configuredCodes) {
+        dangerousDtcCodes = java.util.Arrays.stream(configuredCodes.split(","))
+                .map(String::trim)
+                .filter(code -> !code.isEmpty())
+                .map(code -> code.toUpperCase(Locale.ROOT))
+                .collect(java.util.stream.Collectors.toUnmodifiableSet());
     }
 
     private static Pattern compile(String expression) {
